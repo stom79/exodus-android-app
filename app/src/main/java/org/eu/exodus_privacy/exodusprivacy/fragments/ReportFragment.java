@@ -36,6 +36,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import org.eu.exodus_privacy.exodusprivacy.BuildConfig;
 import org.eu.exodus_privacy.exodusprivacy.R;
 import org.eu.exodus_privacy.exodusprivacy.ReportViewModel;
 import org.eu.exodus_privacy.exodusprivacy.Utils;
@@ -139,6 +140,17 @@ public class ReportFragment extends Fragment implements Updatable {
             else
                 intent.setData(Uri.parse("https://f-droid.org/packages/" + reportDisplay.packageName));
             startActivity(intent);
+        });
+
+        reportBinding.analyseApp.setOnClickListener(v -> {
+            Uri uri;
+            if (!BuildConfig.amal) {
+                uri = Uri.parse("https://reports.exodus-privacy.eu.org/analysis/submit/#" + reportDisplay.packageName);
+            } else {
+                uri = Uri.parse("https://exodus.phm.education.gouv.fr/analysis/submit/#" + reportDisplay.packageName);
+            }
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(browserIntent);
         });
 
         if (reportDisplay.report != null) {
